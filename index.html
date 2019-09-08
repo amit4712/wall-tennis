@@ -1,0 +1,227 @@
+<html>
+<head>
+    
+    <title> 2D Wall Tennis </title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    </head>
+    <body>
+        
+    <style>
+        
+        body {
+            
+            background-color: darkgray ;
+            
+            text-align: center;
+            
+            margin-top: auto;
+        }
+        
+        </style>
+        
+        <canvas id="canvas" width="600" height="320">
+        
+        </canvas>
+        
+        <h4> Developed by: Amit </h4>
+    
+        <script>
+        
+            var canvas;
+            var canvascontext;
+            
+            var ballx = 300;
+            
+            var speedx = 11.5 ;
+            
+            var bally = 160 ;
+            
+            var speedy = 5 ;
+            
+            var slider1 = 135;
+            
+            const sliderheight = 60;
+            
+            var playerscore = 0 ;
+            
+            var lifee = 5
+            
+         //   var life = "lives:" + lifee ;
+            
+          //  var results = 0;
+            
+    //        var level ;
+            
+          // var screen = "Click to play again!" ;
+            
+            
+            
+// mouse position            
+    
+ function calculatemousepos(evt)  {
+     
+        var rect = canvas.getBoundingClientRect();
+        
+        var root = document.documentElement;
+     
+        var mouseX = evt.clientX - rect.left - root.scrollLeft;
+        
+        var mouseY = evt.clientY - rect.top - root.scrollTop;
+     
+     return  {
+         
+                x: mouseX ,
+                y: mouseY
+     } ;
+ }
+            
+//ends   
+        
+       // function handlemouseclick(evt)  {
+            
+      //      if()
+    //    }
+          
+            canvas = document.getElementById('canvas');
+            
+            canvascontext = canvas.getContext('2d');
+            
+     setInterval(move,5);
+            
+            
+          //  canvas.addEventListener('mousedown' , handlemouseclick);
+            
+    //add event listener
+            
+            canvas.addEventListener('mousemove',
+            
+            function (evt)  {
+                
+            var mousepos = calculatemousepos(evt);
+            slider1 = mousepos.y - (sliderheight/2) ;
+            
+            } );
+            
+    //ends    
+            
+    function ballreset()    {
+   
+        ballx = (canvas.width/2) - 3.5 ;
+        bally = (canvas.height/2) ;
+        
+        speedx = -speedx ;
+        
+        
+    }        
+            
+ function move()  {
+     
+        if(lifee == 0)  {
+        
+            speedx = 0 ;
+            speedy = 0 ;
+                    
+             
+        }
+                
+                ballx = ballx + speedx;
+                
+        if(ballx >= canvas.width)  {
+            
+              speedx = -speedx ;
+        }
+                
+        if(ballx <= 0)   {
+            
+              //speedx = -speedx ;
+            
+            if(bally > slider1  &&  bally < slider1 + sliderheight)  {
+                
+                speedx = - speedx ;
+                
+                 playerscore = playerscore + 20 ;
+            }
+            else {
+                
+                ballreset() ;
+                
+                lifee = lifee - 1 ;
+                
+                if(playerscore == 1500)    {
+                    
+                    result = "You Win!" ;
+                    
+                    document.write('Congratulations! You Won..');
+                }
+                
+              // 
+              //  }
+            }
+        }        
+                
+                
+                bally = bally + speedy ;
+                
+        if(bally >= canvas.height)  {
+            
+            speedy = -speedy ;
+        }    
+                
+         if(bally <= 0)   {
+            
+              speedy = -speedy ;
+        }   
+     
+     
+     
+     var life = "lives: " + lifee ;
+     
+      var player_score = "Your Score: " + playerscore;
+                
+                 canvascontext.fillStyle = "black" ;
+            
+            canvascontext.fillRect (0,0, canvas.width, canvas.height);
+     
+     if(lifee == 0)  {
+         
+          canvascontext.fillStyle = "red" ;
+                    
+    canvascontext.fillText("Game over!", 430 , 160);
+         
+         canvascontext.fillText("Game over!", 125 , 160);
+     
+     }
+      
+    
+     canvascontext.fillStyle = "white" ;
+            
+            canvascontext.fillRect (0,slider1, 10, sliderheight);
+            
+          //  canvascontext.fillStyle = "white" ;
+            
+          //  canvascontext.fillRect (590,135, 10, sliderheight);
+            
+             canvascontext.fillStyle = "white" ;
+            
+            canvascontext.fillRect (canvas.width/2, 0 , 0.5 ,canvas.height);
+        
+          canvascontext.fillStyle = "white" ;
+            
+            canvascontext.fillRect (ballx,bally, 8, 8);
+       
+            canvascontext.fillStyle = "white" ;
+     
+     canvascontext.fillText(player_score, (canvas.width/2) - 24 , (canvas.height/2) - 65 );
+     
+      canvascontext.fillText(life, (canvas.width/2) - 12 , (canvas.height/2) + 65);
+      
+   }
+            
+         
+        
+        </script>
+        
+    </body>
+</html>
